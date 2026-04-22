@@ -5,6 +5,10 @@
   "main": "./out/main/index.js",
   "author": "Wisp+Flow Team",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amoguse3/wispucci-ai-beta.git"
+  },
   "scripts": {
     "dev": "electron-vite dev",
     "build": "electron-vite build",
@@ -84,8 +88,8 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "minon69",
-        "repo": "AURA",
+        "owner": "amoguse3",
+        "repo": "wispucci-ai-beta",
         "releaseType": "release"
       }
     ],
