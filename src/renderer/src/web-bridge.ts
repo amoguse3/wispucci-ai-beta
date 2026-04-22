@@ -1,8 +1,16 @@
 import type { AuraAPI, ChatTokenEvent, CourseFeedbackSubmission, CourseGenerationEvent, CourseGenerationRequest, GameDifficulty, GameResult, GameType, MemoryKind, UserProfile, VoiceSettings } from '../../../shared/types'
+import { createBrowserAura } from './browser-aura'
 
 type AuraEventPayload = ChatTokenEvent | CourseGenerationEvent | string
 
 const CLIENT_ID_STORAGE_KEY = 'aura_web_client_id'
+
+function shouldUseHostedBrowserFallback(): boolean {
+  const hostname = window.location.hostname
+  const port = window.location.port
+  const isKnownLocalBridge = (hostname === '127.0.0.1' || hostname === 'localhost') && port === '4315'
+  return !isKnownLocalBridge
+}
 
 function getClientId(): string {
   const existing = window.sessionStorage.getItem(CLIENT_ID_STORAGE_KEY)
@@ -21,6 +29,12 @@ function installWebAuraBridge(): void {
 
   window.__AURA_RUNTIME__ = 'web'
   document.documentElement.dataset.auraRuntime = 'web'
+
+  if (shouldUseHostedBrowserFallback()) {
+    document.documentElement.dataset.auraBackend = 'browser-fallback'
+    window.aura = createBrowserAura()
+    return
+  }
 
   const clientId = getClientId()
   const listeners = new Map<string, Set<(payload: AuraEventPayload) => void>>()
