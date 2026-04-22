@@ -1,0 +1,418 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-aura-bg: #080606;
+  --color-aura-surface: #12100e;
+  --color-aura-card: #1a1714;
+  --color-aura-border: #2a2520;
+  --color-aura-orange: #d97706;
+  --color-aura-amber: #f59e0b;
+  --color-aura-violet: #8b5cf6;
+  --color-aura-rose: #ec4899;
+  --color-aura-emerald: #10b981;
+  --color-aura-text: #e8e0d8;
+  --color-aura-muted: #8a7e72;
+  --color-aura-glow: rgba(217, 119, 6, 0.15);
+  --aura-ui-scale: 1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--color-aura-bg);
+  color: var(--color-aura-text);
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  -webkit-font-smoothing: antialiased;
+  font-size: clamp(9px, 0.55vw + 0.45vh, 11px);
+  line-height: 1.8;
+}
+
+/* Titlebar drag region */
+.titlebar-drag {
+  -webkit-app-region: drag;
+}
+.titlebar-nodrag {
+  -webkit-app-region: no-drag;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-aura-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-aura-muted);
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(18, 16, 14, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(42, 37, 32, 0.5);
+}
+
+/* Glow effect */
+.glow-orange {
+  box-shadow: 0 0 20px rgba(217, 119, 6, 0.2), 0 0 60px rgba(217, 119, 6, 0.05);
+}
+
+.glow-violet {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.2), 0 0 60px rgba(139, 92, 246, 0.05);
+}
+
+/* Breathing animation for avatar */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.03); filter: brightness(1.1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 0; }
+  100% { transform: scale(0.9); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes typing-dot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-4px); }
+}
+
+@keyframes orb-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.1); }
+  50% { transform: translate(-10px, -40px) scale(0.95); }
+  75% { transform: translate(-30px, -10px) scale(1.05); }
+}
+
+@keyframes orb-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-25px, 30px) scale(0.95); }
+  50% { transform: translate(20px, 15px) scale(1.08); }
+  75% { transform: translate(10px, -25px) scale(1); }
+}
+
+@keyframes particle-rise {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-80px) scale(0); }
+}
+
+.animate-breathe { animation: breathe 4s ease-in-out infinite; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-pulse-ring { animation: pulse-ring 2s ease-out infinite; }
+.animate-fade-in-up { animation: fade-in-up 0.4s ease-out forwards; }
+.animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
+.animate-slide-right { animation: slide-in-right 0.3s ease-out forwards; }
+.animate-slide-left { animation: slide-in-left 0.3s ease-out forwards; }
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(217,119,6,0.1) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Input glow on focus */
+input:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.3), 0 0 20px rgba(217, 119, 6, 0.1);
+}
+
+/* Smooth transitions on everything */
+button, a, input, textarea {
+  transition: all 0.2s ease;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(217, 119, 6, 0.3);
+  color: #fff;
+}
+
+/* ── Phase 6: Polish ── */
+
+/* Button press effect */
+button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Hover lift for cards */
+.hover-lift {
+  transition: transform 0.25s cubic-bezier(.16,1,.3,1), box-shadow 0.25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* Tab switch animation */
+@keyframes tab-switch {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-tab-switch { animation: tab-switch 0.25s ease-out forwards; }
+
+/* Message bubble entrance */
+@keyframes msg-in-user {
+  from { opacity: 0; transform: translateX(16px) scale(0.95); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes msg-in-bot {
+  from { opacity: 0; transform: translateX(-16px) scale(0.95); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+.animate-msg-user { animation: msg-in-user 0.3s cubic-bezier(.16,1,.3,1) forwards; }
+.animate-msg-bot { animation: msg-in-bot 0.3s cubic-bezier(.16,1,.3,1) forwards; }
+
+/* Overlay backdrop entrance */
+@keyframes overlay-in {
+  from { opacity: 0; backdrop-filter: blur(0px); }
+  to { opacity: 1; backdrop-filter: blur(20px); }
+}
+@keyframes overlay-content-in {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-overlay { animation: overlay-in 0.25s ease-out forwards; }
+.animate-overlay-content { animation: overlay-content-in 0.3s cubic-bezier(.16,1,.3,1) 0.05s forwards; opacity: 0; }
+
+/* Skeleton loading pulse */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.04; }
+  50% { opacity: 0.08; }
+}
+.skeleton {
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* Progress ring animation */
+@keyframes progress-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-progress-spin { animation: progress-spin 1s linear infinite; }
+
+/* Achievement pop */
+@keyframes achievement-pop {
+  0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+  50% { transform: scale(1.15) rotate(3deg); }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+.animate-achievement { animation: achievement-pop 0.5s cubic-bezier(.16,1,.3,1) forwards; }
+
+/* Subtle hover glow for interactive elements */
+.hover-glow:hover {
+  box-shadow: 0 0 12px rgba(217,119,6,0.12);
+}
+
+/* Smooth view transitions */
+.view-enter {
+  animation: fade-in-up 0.3s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+/* Number count-up helper */
+@keyframes count-pulse {
+  0%, 100% { color: var(--color-aura-text); }
+  50% { color: var(--color-aura-orange); }
+}
+.animate-count { animation: count-pulse 0.6s ease; }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   Cosmic Space Background Animations
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* Stars */
+@keyframes starTwinkle { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:0.8;transform:scale(1.3)} }
+
+/* Planets */
+@keyframes planetFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+/* Sun pulse */
+@keyframes sunPulse {
+  0%,100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.06); }
+}
+
+/* Asteroids drifting */
+@keyframes asteroidDrift { 0%{transform:translateX(-60px) rotate(0deg)} 100%{transform:translateX(calc(100vw + 60px)) rotate(360deg)} }
+
+/* Debris floating & spinning */
+@keyframes debrisFloat {
+  0%,100% { transform: translate(0, 0); }
+  20% { transform: translate(15px, -10px); }
+  40% { transform: translate(-8px, -20px); }
+  60% { transform: translate(12px, 8px); }
+  80% { transform: translate(-10px, 12px); }
+}
+@keyframes debrisSpin {
+  0% { filter: drop-shadow(0 0 2px rgba(160,140,120,0.2)) brightness(1); }
+  50% { filter: drop-shadow(0 0 3px rgba(160,140,120,0.3)) brightness(1.1); }
+  100% { filter: drop-shadow(0 0 2px rgba(160,140,120,0.2)) brightness(1); }
+}
+
+/* Big meteorites — fast fly-across (1.5s visible in 15s cycle) */
+@keyframes bigMeteor {
+  0% { opacity: 0; transform: translate(0, 0); }
+  1% { opacity: 0.6; }
+  2% { opacity: 1; }
+  10% { opacity: 1; transform: translate(calc(110vw), calc(60vh)); }
+  11% { opacity: 0; transform: translate(calc(120vw), calc(65vh)); }
+  100% { opacity: 0; transform: translate(calc(120vw), calc(65vh)); }
+}
+@keyframes sparkFlicker {
+  0% { opacity: 0.3; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.3); }
+}
+
+/* Asteroid impact effects */
+@keyframes impactFlash {
+  0% { transform: scale(0.3); opacity: 1; }
+  40% { transform: scale(1.5); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+@keyframes impactDebris {
+  0% { transform: rotate(var(--r, 0deg)) translateX(5px); opacity: 1; }
+  100% { transform: rotate(var(--r, 0deg)) translateX(35px); opacity: 0; }
+}
+@keyframes impactRing {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(6); opacity: 0; }
+}
+
+/* Cosmic dust */
+@keyframes dustBreathe { 0%,100%{opacity:0.03;transform:scale(1)} 50%{opacity:0.06;transform:scale(1.05)} }
+@keyframes cosmicDust {
+  0%,100% { transform: translate(0, 0); opacity: 0.15; }
+  25% { transform: translate(12px, -8px); opacity: 0.3; }
+  50% { transform: translate(-6px, -15px); opacity: 0.2; }
+  75% { transform: translate(8px, 5px); opacity: 0.35; }
+}
+
+/* Aurora borealis */
+@keyframes auroraPulse {
+  0%,100% { opacity: 0.6; }
+  30% { opacity: 1; }
+  60% { opacity: 0.4; }
+  80% { opacity: 0.9; }
+}
+@keyframes auroraShift {
+  0%,100% { transform: translateX(0) scaleY(1); }
+  25% { transform: translateX(30px) scaleY(1.15); }
+  50% { transform: translateX(-20px) scaleY(0.9); }
+  75% { transform: translateX(15px) scaleY(1.1); }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   Minecraft Pixel Font — Global Readability
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* Force pixel font everywhere (themeable: Cosmos keeps Press Start 2P,
+   other themes can override via the --aura-pixel-font CSS variable). */
+*, *::before, *::after {
+  font-family: var(--aura-pixel-font, 'Press Start 2P', 'Courier New', monospace) !important;
+}
+
+/* Opt-in "prose" class used by TypewriterText + long body text so the user's
+   selected reading font (from Settings → Teme) actually wins over the global
+   pixel rule. Higher specificity via the class selector + !important. */
+.aura-theme-font,
+.aura-theme-font * {
+  font-family: var(--aura-font, Georgia, 'Times New Roman', serif) !important;
+}
+
+/* Ensure all text is at least readable — Press Start 2P needs bigger sizes */
+button, span, div, p, label, a, li, td, th, h1, h2, h3, h4, h5, h6, input, textarea, select {
+  line-height: 1.8 !important;
+  min-font-size: 9px;
+}
+
+/* Override all hardcoded tiny font sizes — pixel font is unreadable below 8px */
+[style*="font-size: 5px"], [style*="font-size:5px"],
+[style*="font-size: 6px"], [style*="font-size:6px"] {
+  font-size: 9px !important;
+}
+[style*="font-size: 8px"], [style*="font-size:8px"] {
+  font-size: 10px !important;
+}
+
+input, textarea, select {
+  font-size: inherit;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   Custom Pixel Cursor
+   ══════════════════════════════════════════════════════════════════════════════ */
+html, body, #root {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect x='0' y='0' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='0' y='2' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='0' y='4' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='0' y='6' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='0' y='8' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='0' y='10' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='2' y='4' width='2' height='2' fill='%23ffe8c0'/%3E%3Crect x='2' y='6' width='2' height='2' fill='%23ffe8c0'/%3E%3Crect x='2' y='8' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='4' y='4' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='4' y='6' width='2' height='2' fill='%23ffe8c0'/%3E%3Crect x='4' y='8' width='2' height='2' fill='%23d97706'/%3E%3Crect x='6' y='6' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='6' y='8' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='8' y='8' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='8' y='10' width='2' height='2' fill='%23d97706'/%3E%3Crect x='10' y='10' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='10' y='12' width='2' height='2' fill='%23d97706'/%3E%3C/svg%3E") 0 0, default;
+}
+
+button, a, [role="button"], .cursor-pointer {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18'%3E%3Crect x='6' y='0' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='8' y='0' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='4' y='2' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='6' y='2' width='2' height='2' fill='%23ffe8c0'/%3E%3Crect x='8' y='2' width='2' height='2' fill='%23ffe8c0'/%3E%3Crect x='10' y='2' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='4' y='4' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='6' y='4' width='2' height='2' fill='%23ffe8c0'/%3E%3Crect x='8' y='4' width='2' height='2' fill='%23ffe8c0'/%3E%3Crect x='10' y='4' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='4' y='6' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='6' y='6' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='8' y='6' width='2' height='2' fill='%23f5e4a8'/%3E%3Crect x='10' y='6' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='2' y='8' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='4' y='8' width='2' height='2' fill='%23d97706'/%3E%3Crect x='6' y='8' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='8' y='8' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='10' y='8' width='2' height='2' fill='%23d97706'/%3E%3Crect x='12' y='8' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='2' y='10' width='2' height='2' fill='%23d97706'/%3E%3Crect x='4' y='10' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='10' y='10' width='2' height='2' fill='%23c49a3c'/%3E%3Crect x='12' y='10' width='2' height='2' fill='%23d97706'/%3E%3Crect x='4' y='12' width='2' height='2' fill='%23d97706'/%3E%3Crect x='10' y='12' width='2' height='2' fill='%23d97706'/%3E%3C/svg%3E") 7 4, pointer;
+}
+
+/* Pixel-art text rendering — crisp edges */
+#root {
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  text-rendering: optimizeSpeed;
+  image-rendering: pixelated;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   Globally-available keyframes (used across multiple components)
+   ══════════════════════════════════════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes auraPulse {
+  0%, 100% { box-shadow: 0 0 14px rgba(196,154,60,0.24); }
+  50%      { box-shadow: 0 0 28px rgba(196,154,60,0.45), 0 0 50px rgba(196,154,60,0.12); }
+}
+@keyframes panelIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
